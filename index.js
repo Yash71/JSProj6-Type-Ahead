@@ -11,18 +11,23 @@ fmatches=(wordmatch,cities)=>{
         return place.city.match(regex) || place.state.match(regex);
     });
 } 
-dispmatch=(e)=>{
-    const matcharray=fmatches(e.target.value,cities);
+//function to display commas between population
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+function dispmatch(){
+    const matcharray=fmatches(this.value,cities);
     const html=matcharray.map(place =>{
-        const regex=new RegExp(e.target.value,'gi');
-        const cityname=place.city.replace(regex,`<span class="h1">${e.target.value}</span>`)
-        const statename=place.state.replace(regex,`<span class="h1">${e.target.value}</span>`)
+        const regex=new RegExp(this.value,'gi');
+        const cityname=place.city.replace(regex,`<span class="h1">${this.value}</span>`)
+        const statename=place.state.replace(regex,`<span class="h1">${this.value}</span>`)
         return `
             <li>
                 <span class="name">${cityname},${statename}</span>
-                <span class="population">${place.population}</span>
+                <span class="population">${numberWithCommas(place.population)}</span>
             </li>
-        `
+        `;
     })
 
 }
